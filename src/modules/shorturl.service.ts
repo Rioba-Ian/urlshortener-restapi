@@ -37,3 +37,16 @@ export async function getShortUrl(input: GetShortUrlInput) {
 
  return shortDestination;
 }
+
+export async function incrementAnalytics(shortId: string) {
+ await prisma.analytics.update({
+  where: {
+   shortUrlId: shortId,
+  },
+  data: {
+   clicks: {
+    increment: 1,
+   },
+  },
+ });
+}

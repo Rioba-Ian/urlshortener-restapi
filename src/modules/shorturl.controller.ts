@@ -1,6 +1,10 @@
 import {FastifyReply, FastifyRequest} from "fastify";
 import {CreateShortUrlInput, GetShortUrlInput} from "./shorturl.schema";
-import {createShortUrl, getShortUrl} from "./shorturl.service";
+import {
+ createShortUrl,
+ getShortUrl,
+ incrementAnalytics,
+} from "./shorturl.service";
 
 export async function createshortUrlHandler(
  request: FastifyRequest<{Body: CreateShortUrlInput}>,
@@ -28,6 +32,12 @@ export async function getShortUrlHandler(
 
  if (!destUrl) {
   return reply.code(404).send("Invalid short url");
+ }
+
+ try {
+  await incrementAnalytics(shortId);
+ } catch (e) {
+  reply.code(500).send("There was an error in adding analytics.");
  }
 
  return reply.redirect(destUrl.destination);
