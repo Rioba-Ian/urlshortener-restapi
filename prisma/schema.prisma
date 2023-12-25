@@ -9,3 +9,17 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model ShortUrl {
+   id    String @id @default(auto()) @map("_id") @db.ObjectId
+   shortUrl String 
+   destination String 
+   Analytics Analytics?
+}
+
+model Analytics {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  ShortUrl ShortUrl @relation(fields: [shortUrlId], references: [id])
+  shortUrlId String @unique @db.ObjectId
+  clicks Int @default(0)
+}
