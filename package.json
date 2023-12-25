@@ -1,13 +1,13 @@
 {
   "name": "urlshortenerbe",
   "version": "1.0.0",
-  "description": "",
+  "description": "Url Shortener",
   "main": "index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/main.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Rioba Ian <riobafelix@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "5.7.1",

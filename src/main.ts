@@ -1,7 +1,9 @@
 import fastify from "fastify";
 import shorturlRoutes from "./modules/shorturl.route";
 
-const server = fastify();
+const server = fastify({
+ logger: true,
+});
 
 server.get("/healthcheck", async function () {
  return {status: "ok"};
