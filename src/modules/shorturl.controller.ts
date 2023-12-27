@@ -28,17 +28,25 @@ export async function getShortUrlHandler(
 ) {
  const {shortId} = request.params;
 
+ console.log(shortId, "shortId");
+
+ if (!shortId) {
+  return reply.code(400).send("Short :id is required.");
+ }
+
  const destUrl = await getShortUrl({shortId});
 
  if (!destUrl) {
   return reply.code(404).send("Invalid short url");
  }
 
- try {
-  await incrementAnalytics(shortId);
- } catch (e) {
-  reply.code(500).send("There was an error in adding analytics.");
- }
+ setImmediate(async () => {
+  try {
+   await incrementAnalytics(shortId);
+  } catch (e) {
+   console.error("There was an error in adding analytics.");
+  }
+ });
 
  return reply.redirect(destUrl.destination);
 }

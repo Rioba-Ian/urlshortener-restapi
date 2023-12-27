@@ -13,7 +13,7 @@ async function shorturlRoutes(app: FastifyInstance) {
   createshortUrlHandler
  );
 
- app.get("/:shorturl", getShortUrlHandler);
+ app.get("/:shortId", getShortUrlHandler);
 }
 
 export default shorturlRoutes;

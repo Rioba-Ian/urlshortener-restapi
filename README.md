@@ -8,6 +8,10 @@ This project is a URL shortener API built with Fastify, TypeScript, and Prisma. 
 - TypeScript: A statically typed superset of JavaScript that adds types to the language.
 - Prisma: A database toolkit used for database operations.
 
+## Deployment
+
+- Vercel: Serverless vercel functions
+
 ## API Endpoints
 
 - `POST /api/shorturl`: Creates a new short URL.

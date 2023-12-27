@@ -29,9 +29,9 @@ export async function createShortUrl(input: CreateShortUrlInput) {
 export async function getShortUrl(input: GetShortUrlInput) {
  const {shortId} = input;
 
- const shortDestination = await prisma.shortUrl.findFirst({
+ const shortDestination = await prisma.shortUrl.findUnique({
   where: {
-   id: shortId,
+   shortUrl: shortId,
   },
  });
 
