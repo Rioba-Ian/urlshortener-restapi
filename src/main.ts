@@ -1,5 +1,6 @@
 import fastify from "fastify";
 import shorturlRoutes from "./modules/shorturl.route";
+import agenda from "./utils/agenda";
 
 const server = fastify({
  logger: true,
@@ -7,6 +8,11 @@ const server = fastify({
 
 server.get("/healthcheck", async function () {
  return {status: "ok"};
+});
+
+server.ready(async (err) => {
+ if (err) throw err;
+ await agenda.start();
 });
 
 async function main() {

@@ -1,6 +1,8 @@
+import fastify from "fastify";
 import prisma from "../utils/prisma";
 import {generateRandomString} from "../utils/utils";
 import {CreateShortUrlInput, GetShortUrlInput} from "./shorturl.schema";
+import agenda from "../utils/agenda";
 
 export async function createShortUrl(input: CreateShortUrlInput) {
  const {destination} = input;
@@ -34,14 +36,21 @@ export async function getShortUrl(input: GetShortUrlInput) {
    shortUrl: shortId,
   },
  });
+ agenda.schedule("in 2 seconds", "increment analytics", {shortId});
 
  return shortDestination;
 }
 
 export async function incrementAnalytics(shortId: string) {
+ const shortUrlId = await prisma.shortUrl.findUnique({
+  where: {
+   shortUrl: shortId,
+  },
+ });
+
  await prisma.analytics.update({
   where: {
-   shortUrlId: shortId,
+   shortUrlId: shortUrlId?.id,
   },
   data: {
    clicks: {

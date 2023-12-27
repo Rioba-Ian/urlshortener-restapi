@@ -5,6 +5,7 @@ import {
  getShortUrl,
  incrementAnalytics,
 } from "./shorturl.service";
+import agenda from "../utils/agenda";
 
 export async function createshortUrlHandler(
  request: FastifyRequest<{Body: CreateShortUrlInput}>,
@@ -40,12 +41,9 @@ export async function getShortUrlHandler(
   return reply.code(404).send("Invalid short url");
  }
 
- setImmediate(async () => {
-  try {
-   await incrementAnalytics(shortId);
-  } catch (e) {
-   console.error("There was an error in adding analytics.");
-  }
+ agenda.define("increment analytics", async (job) => {
+  const {shortId} = job.attrs.data;
+  await incrementAnalytics(shortId);
  });
 
  return reply.redirect(destUrl.destination);
