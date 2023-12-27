@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import shorturlRoutes from "./modules/shorturl.route";
 import agenda from "./utils/agenda";
+import cors from "@fastify/cors";
 
 const server = fastify({
  logger: true,
@@ -16,6 +17,10 @@ server.ready(async (err) => {
 });
 
 async function main() {
+ await server.register(cors, {
+  origin: "*",
+ });
+
  server.register(shorturlRoutes, {prefix: "/api/shorturl"});
  try {
   await server.listen({port: 3000, host: "0.0.0.0"});
