@@ -23,7 +23,7 @@ async function main() {
   origin: [
    "http://localhost:3000",
    "http://localhost:5173",
-   "https://shortlyurlshortener-rho.vercel.app/",
+   "https://shortlyurlshortener-rho.vercel.app",
   ],
  });
 
