@@ -4,7 +4,7 @@
   "description": "Url Shortener",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
+    "dev": "tsx watch src/main.ts",
     "build": "tsc && npx prisma generate",
     "start": "node src/main.js"
   },
@@ -24,6 +24,7 @@
     "@types/node": "^20.10.5",
     "prisma": "^5.7.1",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.7.0",
     "typescript": "^5.3.3"
   }
 }

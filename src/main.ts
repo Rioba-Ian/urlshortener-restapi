@@ -4,7 +4,9 @@ import agenda from "./utils/agenda";
 import cors from "@fastify/cors";
 
 const server = fastify({
- logger: true,
+ logger: {
+  level: "info",
+ },
 });
 
 server.get("/healthcheck", async function () {
@@ -17,11 +19,16 @@ server.ready(async (err) => {
 });
 
 async function main() {
- await server.register(cors, {
-  origin: "*",
+ server.register(cors, {
+  origin: [
+   "http://localhost:3000",
+   "http://localhost:5173",
+   "https://shortlyurlshortener-rho.vercel.app/",
+  ],
  });
 
  server.register(shorturlRoutes, {prefix: "/api/shorturl"});
+
  try {
   await server.listen({port: 3000, host: "0.0.0.0"});
   console.log(`Server listening on port 3000`);
